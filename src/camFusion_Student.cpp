@@ -133,8 +133,10 @@ void show3DObjects(std::vector<BoundingBox> &boundingBoxes, cv::Size worldSize, 
 // associate a given bounding box with the keypoints it contains
 void clusterKptMatchesWithROI(BoundingBox &boundingBox, std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPoint> &kptsCurr, std::vector<cv::DMatch> &kptMatches)
 {
-    for (cv::Dmatch match : kptMatches){
-        if(boundingBox.roi.contains(kptsCurr[match.trainIdx].pt)){
+    for (cv::DMatch match : kptMatches)
+    {
+        if(boundingBox.roi.contains(kptsCurr[match.trainIdx].pt))
+        {
             boundingBox.kptMatches.push_back(match);
         }
     }
@@ -200,7 +202,7 @@ void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
         xCurr.push_back(it->x);
     }
 
-    sort(xPrev.begin(),xPrev.end())
+    sort(xPrev.begin(),xPrev.end());
     sort(xCurr.begin(),xCurr.end());
 
     double mPrev, mCurr;
@@ -236,7 +238,7 @@ void matchBoundingBoxes(std::vector<cv::DMatch> &matches, std::map<int, int> &bb
     int bbidxPrev;
     int bbidxCurr;
 
-    for (cv::Dmatch match : matches)
+    for (cv::DMatch match : matches)
     {
         kptPrev = prevFrame.keypoints[match.queryIdx];
         kptCurr = currFrame.keypoints[match.trainIdx];
@@ -268,19 +270,19 @@ void matchBoundingBoxes(std::vector<cv::DMatch> &matches, std::map<int, int> &bb
             }
             else
             {
-                matchCount[bbidxPrev][bbidxCurr] = 1
+                matchCount[bbidxPrev][bbidxCurr] = 1;
             }   
         }
         else
         {
-            matchCount[bbidxPrev][bbidxCurr] = 1
+            matchCount[bbidxPrev][bbidxCurr] = 1;
         }
     }
 
     for(auto it = matchCount.begin(); it!=matchCount.end();++it){
         int maxCount = 0;
         int maxId = 0;
-        for(auto it2 it2->second.begin();it2!=it->second.end();++it2){
+        for(auto it2 = it->second.begin();it2!=it->second.end();++it2){
             if(it2->second > maxCount){
                 maxId = it2->first;
                 maxCount = it2->second;
