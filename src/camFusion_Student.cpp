@@ -158,7 +158,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
         double distPrev = cv::norm(kptsPrev.at((it+1)->trainIdx, kptsPrev.at(it->trainIdx));
 
         double distMin = 100.0;
-        if (distCurr >= minDist) {
+        if (distCurr >= distMin) {
                 double distRatio = distCurr / distPrev;
                 distRatios.push_back(distRatio);
             }
@@ -172,7 +172,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 
     std::sort(distRatios.begin(), distRatios.end());
     if(distRatios.size() % 2 == 0){
-        double medianDistRatio = (distRatios[distRatios.size()/2] + distRatio[distRatios.size()/2+1])/2.0;
+        double medianDistRatio = (distRatios[distRatios.size()/2] + distRatios[distRatios.size()/2+1])/2.0;
     }
     else
     {
