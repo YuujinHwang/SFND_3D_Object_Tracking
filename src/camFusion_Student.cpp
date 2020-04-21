@@ -164,10 +164,11 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
             double distCurr = cv::norm(kpOuterCurr.pt - kpInnerCurr.pt);
             double distPrev = cv::norm(kpOuterPrev.pt - kpInnerPrev.pt); // Threshold the calculated distRatios by requiring a minimum current distance between keypoints 
 
-            double minDist = 100.0;
+            double minDist = 100.0;  // Threshold the calculated distRatios by requiring a minimum current distance between keypoints 
+
             // Avoid division by zero and apply the threshold
-            if (distPrev > std::numeric_limits<double>::epsilon() && distCurr < distPrev) {
-                double distRatio = distCurr/distPrev;
+            if (distPrev > std::numeric_limits<double>::epsilon() && distCurr >= minDist) {
+                double distRatio = distCurr / distPrev;
                 distRatios.push_back(distRatio);
             }
         }
@@ -185,7 +186,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
     double medianDistRatio = distRatios[distRatios.size() / 2];
 
     // Finally, calculate a TTC estimate based on these 2D camera features
-    TTC = (1.0 / frameRate) / (medianDistRatio - 1);
+    TTC = (-1.0 / frameRate) / (1 - medianDistRatio);
 }
 
 
