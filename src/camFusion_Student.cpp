@@ -151,11 +151,12 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 {
     vector<double> distRatios;
     for (auto it = kptMatches.begin(); it != kptMatches.end() - 1; ++it) {
+        auto it2 = next(it);
         cv::KeyPoint kpOuterCurr = kptsCurr.at(it->trainIdx);  // kptsCurr is indexed by trainIdx, see NOTE in matchBoundinBoxes
         cv::KeyPoint kpOuterPrev = kptsPrev.at(it->queryIdx);  // kptsPrev is indexed by queryIdx, see NOTE in matchBoundinBoxes
 
-        double distCurr = cv::norm(kptsCurr.at(next(it)->trainIdx - kptsCurr.at(next(it)->trainIdx));
-        double distPrev = cv::norm(kptsPrev.at(next(it)->trainIdx - kptsPrev.at(next(it)->trainIdx));
+        double distCurr = cv::norm(kptsCurr.at(next(it))->trainIdx - kptsCurr.at(next(it))->trainIdx));
+        double distPrev = cv::norm(kptsPrev.at(next(it))->trainIdx - kptsPrev.at(next(it))->trainIdx));
 
         double distMin = 100.0;
         if (distCurr >= distMin) {
