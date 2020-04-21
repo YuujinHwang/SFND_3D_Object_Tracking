@@ -152,11 +152,12 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
     vector<double> distRatios;
     for (auto it = kptMatches.begin(); it != kptMatches.end() - 1; ++it) {
         auto it2 = next(it);
-        // cv::KeyPoint kpOuterCurr = kptsCurr.at(it->trainIdx);  // kptsCurr is indexed by trainIdx, see NOTE in matchBoundinBoxes
-        // cv::KeyPoint kpOuterPrev = kptsPrev.at(it->queryIdx);  // kptsPrev is indexed by queryIdx, see NOTE in matchBoundinBoxes
-
-        double distCurr = cv::norm(kptsCurr.at(it->trainIdx) - kptsCurr.at(it2->trainIdx));
-        double distPrev = cv::norm(kptsPrev.at(it->trainIdx) - kptsPrev.at(it2->trainIdx));
+        cv::KeyPoint kptCurr1 = kptsCurr.at(it->trainIdx);  // kptsCurr is indexed by trainIdx, see NOTE in matchBoundinBoxes
+        cv::KeyPoint kptPrev1 = kptsPrev.at(it->queryIdx);  // kptsPrev is indexed by queryIdx, see NOTE in matchBoundinBoxes
+        cv::KeyPoint kptCurr2 = kptsCurr.at(it2->trainIdx);  // kptsCurr is indexed by trainIdx, see NOTE in matchBoundinBoxes
+        cv::KeyPoint kptPrev2 = kptsPrev.at(it2->queryIdx); 
+        double distCurr = cv::norm(kptCurr1 - kptCurr2);
+        double distPrev = cv::norm(kptPrev1 - kptPrev2);
 
         double distMin = 100.0;
         if (distCurr >= distMin) {
