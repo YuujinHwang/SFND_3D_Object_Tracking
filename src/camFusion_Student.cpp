@@ -151,11 +151,11 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 {
     vector<double> distRatios;
     for (auto it = kptMatches.begin(); it != kptMatches.end() - 1; ++it) {
-        cv::KeyPoint kpOuterCurr = kptsCurr.at(it1->trainIdx);  // kptsCurr is indexed by trainIdx, see NOTE in matchBoundinBoxes
-        cv::KeyPoint kpOuterPrev = kptsPrev.at(it1->queryIdx);  // kptsPrev is indexed by queryIdx, see NOTE in matchBoundinBoxes
+        cv::KeyPoint kpOuterCurr = kptsCurr.at(it->trainIdx);  // kptsCurr is indexed by trainIdx, see NOTE in matchBoundinBoxes
+        cv::KeyPoint kpOuterPrev = kptsPrev.at(it->queryIdx);  // kptsPrev is indexed by queryIdx, see NOTE in matchBoundinBoxes
 
-        double distCurr = cv::norm(kptsCurr.at((it+1)->trainIdx, kptsCurr.at(it->trainIdx));
-        double distPrev = cv::norm(kptsPrev.at((it+1)->trainIdx, kptsPrev.at(it->trainIdx));
+        double distCurr = cv::norm(kptsCurr.at((it+1)->trainIdx, kptsCurr.at((it+1)->trainIdx));
+        double distPrev = cv::norm(kptsPrev.at((it+1)->trainIdx, kptsPrev.at((it+1)->trainIdx));
 
         double distMin = 100.0;
         if (distCurr >= distMin) {
@@ -169,14 +169,14 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
         TTC = std::numeric_limits<double>::quiet_NaN();
         return;
     }
-
+    double medianDistRatio;
     std::sort(distRatios.begin(), distRatios.end());
     if(distRatios.size() % 2 == 0){
-        double medianDistRatio = (distRatios[distRatios.size()/2] + distRatios[distRatios.size()/2+1])/2.0;
+        medianDistRatio = (distRatios[distRatios.size()/2] + distRatios[distRatios.size()/2+1])/2.0;
     }
     else
     {
-        double medianDistRatio = distRatios[distRatios.size() / 2];
+        medianDistRatio = distRatios[distRatios.size() / 2];
     }
     TTC = (-1.0 / frameRate) / (1 - medianDistRatio);
 }
