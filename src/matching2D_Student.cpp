@@ -30,8 +30,16 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
     }
     else if (selectorType.compare("SEL_KNN") == 0)
     { // k nearest neighbors (k=2)
-
-        // ...
+        int k = 2;
+        vector<vector<cv::DMatch>> knn_matches;
+        matcher->knnMatch(descSource, descRef, knn_matches, k);
+        
+        double minDescDistRatio = 0.8;
+        for (auto it : knn_matches) {
+            if ( 2 == it.size() && (it[0].distance < minDescDistRatio * it[1].distance) ) {
+                matches.push_back(it[0]);
+            }
+        }
     }
 }
 
