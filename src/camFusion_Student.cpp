@@ -162,13 +162,11 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 
             // Use cv::norm to calculate the current and previous Euclidean distances between each keypoint in the pair
             double distCurr = cv::norm(kpOuterCurr.pt - kpInnerCurr.pt);
-            double distPrev = cv::norm(kpOuterPrev.pt - kpInnerPrev.pt);
-
-            double minDist = 0.0;  // Threshold the calculated distRatios by requiring a minimum current distance between keypoints 
+            double distPrev = cv::norm(kpOuterPrev.pt - kpInnerPrev.pt); // Threshold the calculated distRatios by requiring a minimum current distance between keypoints 
 
             // Avoid division by zero and apply the threshold
-            if (distPrev > std::numeric_limits<double>::epsilon() && distCurr >= minDist) {
-                double distRatio = distPrev / distCurr;
+            if (distPrev > std::numeric_limits<double>::epsilon()) {
+                double distRatio = distCurr/distPrev;
                 distRatios.push_back(distRatio);
             }
         }
