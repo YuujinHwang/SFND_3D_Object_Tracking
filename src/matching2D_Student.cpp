@@ -3,11 +3,6 @@
 
 using namespace std;
 
-
-
-// from previous project
-
-
 // Find best matches for keypoints in two camera images based on several matching methods
 double matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::KeyPoint> &kPtsRef, cv::Mat &descSource, cv::Mat &descRef,
                       std::vector<cv::DMatch> &matches, std::string descriptorType, std::string matcherType, std::string selectorType)
