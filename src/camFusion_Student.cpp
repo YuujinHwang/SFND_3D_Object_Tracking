@@ -146,16 +146,18 @@ void clusterKptMatchesWithROI(BoundingBox &boundingBox, std::vector<cv::KeyPoint
         }
     }
     double mean = accumulate(distance.begin(), distance.end(),0) / distance.size();
+    int idx = 0;
     for (auto it = boundingBox.kptMatches.begin(); it != boundingBox.kptMatches.end();)
     {
-        if (distance[*it]>2*mean)
+        if (distance[idx]>2*mean)
         {
             boundingBox.kptMatches.erase(it);
-            distance.erase(distance.at(*it));
+            distance.erase(distance.begin()+idx);
         }
         else
         {
             it++;
+            idx++;
         }
         
     }
