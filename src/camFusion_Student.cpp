@@ -153,8 +153,11 @@ void clusterKptMatchesWithROI(BoundingBox &boundingBox, std::vector<cv::KeyPoint
         {
             boundingBox.kptMatches.erase(it);
             distance.erase(distance.begin()+idx);
+        }
+        else
         {
             idx++;
+            it++;
         }
         
     }
@@ -166,7 +169,8 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
                       std::vector<cv::DMatch> kptMatches, double frameRate, double &TTC, cv::Mat *visImg)
 {
     vector<double> distRatios;
-    for (auto it = kptMatches.begin(); it != kptMatches.end() - 1; ++it) {
+    for (auto it = kptMatches.begin(); it != kptMatches.end() - 1; ++it) 
+    {
         auto it2 = next(it);
         cv::KeyPoint kptCurr1 = kptsCurr.at(it->trainIdx);  // kptsCurr is indexed by trainIdx, see NOTE in matchBoundinBoxes
         cv::KeyPoint kptPrev1 = kptsPrev.at(it->queryIdx);  // kptsPrev is indexed by queryIdx, see NOTE in matchBoundinBoxes
